@@ -79,7 +79,7 @@ struct OptionsListView: View {
         case .chatStructuredOutput:
           ChatStructuredOutputDemoView(service: openAIService)
         case .chatStructuredOutputTool:
-          ChatStructureOutputToolDemoView(service: openAIService)
+            ChatStructuredOutputDemoView(service: openAIService)
         case .configureAssistant:
           AssistantConfigurationDemoView(service: openAIService)
         case .realTimeAPI:
