@@ -928,33 +928,13 @@ public final class DefaultOpenAIAzureService: OpenAIService {
   {
     var responseParameters = parameters
     responseParameters.stream = true
-    
-    // Create custom request for Azure responses API (uses /openai/responses instead of /openai/deployments/{deployment}/responses)
-    var request = URLRequest(url: URL(string: "\(openAIEnvironment.baseURL)/openai/responses")!)
-    
-    // Add query items (api-version)
-    if !initialQueryItems.isEmpty {
-      var components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!
-      components.queryItems = initialQueryItems
-      request.url = components.url!
-    }
-    
-    // Set method and headers
-    request.httpMethod = "POST"
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    
-    // Add API key header
-    switch apiKey {
-    case .apiKey(let key):
-        request.addValue(key, forHTTPHeaderField: apiKey.headerField)
-    case .bearer(let token):
-      request.addValue(token, forHTTPHeaderField: apiKey.headerField)
-    }
-    
-    // Encode parameters as JSON body
-    let encoder = JSONEncoder()
-    request.httpBody = try encoder.encode(responseParameters)
-    
+    let request = try AzureOpenAIAPI.response(.create(deploymentID: parameters.model)).request(
+      apiKey: apiKey,
+      openAIEnvironment: openAIEnvironment,
+      organizationID: nil,
+      method: .post,
+      params: responseParameters,
+      queryItems: initialQueryItems)
     return try await fetchStream(debugEnabled: debugEnabled, type: ResponseStreamEvent.self, with: request)
   }
 
