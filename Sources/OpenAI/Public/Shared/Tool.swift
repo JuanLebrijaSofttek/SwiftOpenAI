@@ -344,11 +344,13 @@ public enum Tool: Codable {
     public struct McpTool: Codable {
         public init(
             name: String,
+            server_label: String,
             parameters: JSONSchema,
             strict: Bool? = nil,
             description: String? = nil)
         {
             self.name = name
+            self.server_label = server_label
             self.parameters = parameters
             self.strict = strict
             self.description = description
@@ -356,6 +358,9 @@ public enum Tool: Codable {
         
         /// The name of the function to call
         public let name: String
+        
+        /// The name of the mcp server to call
+        public let server_label: String
         
         /// A JSON schema object describing the parameters of the function
         public let parameters: JSONSchema
@@ -371,6 +376,7 @@ public enum Tool: Codable {
         
         enum CodingKeys: String, CodingKey {
             case name
+            case server_label
             case parameters
             case strict
             case type
