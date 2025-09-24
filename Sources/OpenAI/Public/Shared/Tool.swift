@@ -343,17 +343,27 @@ public enum Tool: Codable {
     /// Used in mcp tools
     public struct Mcp: Codable {
         public init(
-            server_label: String,
+            server_label: String? = nil,
+            server_url: String? = nil,
+            connector_id: String? = nil,
             description: String? = nil)
         {
             self.server_label = server_label
+            self.server_url = server_label
+            self.connector_id = description
             self.description = description
         }
         /// The type of the mcp tool. Always mcp
         public let type = "mcp"
         
         /// The name of the mcp server to call
-        public let server_label: String
+        public let server_label: String?
+        
+        /// A description of the mcp. Used by the model to determine whether or not use mcp
+        public let server_url: String?
+        
+        /// A description of the mcp. Used by the model to determine whether or not use mcp
+        public let connector_id: String?
         
         /// A description of the mcp. Used by the model to determine whether or not use mcp
         public let description: String?
@@ -361,6 +371,8 @@ public enum Tool: Codable {
         enum CodingKeys: String, CodingKey {
             case type
             case server_label
+            case server_url
+            case connector_id
             case description
         }
     }
