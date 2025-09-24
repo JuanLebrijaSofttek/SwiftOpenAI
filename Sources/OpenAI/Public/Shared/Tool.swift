@@ -344,14 +344,19 @@ public enum Tool: Codable {
     public struct Mcp: Codable {
         public init(
             server_label: String? = nil,
+            server_description: String? = nil,
             server_url: String? = nil,
             connector_id: String? = nil,
-            description: String? = nil)
+            authorization: String? = nil,
+            require_approval: String? = nil
+        )
         {
             self.server_label = server_label
-            self.server_url = server_label
-            self.connector_id = description
-            self.description = description
+            self.server_description = server_description
+            self.server_url = server_url
+            self.connector_id = connector_id
+            self.authorization = authorization
+            self.require_approval = require_approval
         }
         /// The type of the mcp tool. Always mcp
         public let type = "mcp"
@@ -360,20 +365,28 @@ public enum Tool: Codable {
         public let server_label: String?
         
         /// A description of the mcp. Used by the model to determine whether or not use mcp
+        public let server_description: String?
+        
+        /// A description of the mcp. Used by the model to determine whether or not use mcp
         public let server_url: String?
         
         /// A description of the mcp. Used by the model to determine whether or not use mcp
         public let connector_id: String?
         
-        /// A description of the mcp. Used by the model to determine whether or not use mcp
-        public let description: String?
+        /// Used oin connectors for authorization
+        public let authorization: String?
+        
+        /// Used to limit
+        public let require_approval: String?
         
         enum CodingKeys: String, CodingKey {
             case type
             case server_label
+            case server_description
             case server_url
             case connector_id
-            case description
+            case authorization
+            case require_approval
         }
     }
     
