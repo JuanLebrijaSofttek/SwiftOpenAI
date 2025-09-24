@@ -208,9 +208,9 @@ public enum ResponseStreamEvent: Decodable {
       self = try .imageGenerationCallPartialImage(ImageGenerationCallPartialImageEvent(from: decoder))
     case "response.image_generation_call.completed":
       self = try .imageGenerationCallCompleted(ImageGenerationCallCompletedEvent(from: decoder))
-    case "response.mcp_call.arguments.delta":
+    case "response.mcp_call_arguments.delta":
       self = try .mcpCallArgumentsDelta(MCPCallArgumentsDeltaEvent(from: decoder))
-    case "response.mcp_call.arguments.done":
+    case "response.mcp_call_arguments.done":
       self = try .mcpCallArgumentsDone(MCPCallArgumentsDoneEvent(from: decoder))
     case "response.mcp_call.in_progress":
       self = try .mcpCallInProgress(MCPCallInProgressEvent(from: decoder))
