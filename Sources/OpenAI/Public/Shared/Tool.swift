@@ -16,7 +16,7 @@ public enum Tool: Codable {
     case function(FunctionTool)
     
     /// Defines a function in your own code the model can choose to call
-    case mcp(McpTool)
+    case mcp(Mcp)
     
     /// A tool that controls a virtual computer
     case computerUse(ComputerUseTool)
@@ -36,7 +36,7 @@ public enum Tool: Codable {
         case "function":
             self = try .function(singleValueContainer.decode(FunctionTool.self))
         case "mcp":
-            self = try .mcp(singleValueContainer.decode(McpTool.self))
+            self = try .mcp(singleValueContainer.decode(Mcp.self))
         case "computer_use_preview":
             self = try .computerUse(singleValueContainer.decode(ComputerUseTool.self))
         case "web_search_preview", "web_search_preview_2025_03_11":
@@ -341,45 +341,26 @@ public enum Tool: Codable {
     }
     
     /// Used in mcp tools
-    public struct McpTool: Codable {
+    public struct Mcp: Codable {
         public init(
-            name: String,
             server_label: String,
-            parameters: JSONSchema,
-            strict: Bool? = nil,
             description: String? = nil)
         {
-            self.name = name
             self.server_label = server_label
-            self.parameters = parameters
-            self.strict = strict
             self.description = description
         }
-        
-        /// The name of the function to call
-        public let name: String
+        /// The type of the mcp tool. Always mcp
+        public let type = "mcp"
         
         /// The name of the mcp server to call
         public let server_label: String
         
-        /// A JSON schema object describing the parameters of the function
-        public let parameters: JSONSchema
-        
-        /// Whether to enforce strict parameter validation. Default true
-        public let strict: Bool?
-        
-        /// The type of the mcp tool. Always mcp
-        public let type = "mcp"
-        
-        /// A description of the function. Used by the model to determine whether or not to call the function
+        /// A description of the mcp. Used by the model to determine whether or not use mcp
         public let description: String?
         
         enum CodingKeys: String, CodingKey {
-            case name
-            case server_label
-            case parameters
-            case strict
             case type
+            case server_label
             case description
         }
     }
