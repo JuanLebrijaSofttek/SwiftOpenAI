@@ -22,7 +22,7 @@ public struct ResponseModel: Decodable {
 
   public struct ErrorObject: Decodable {
     /// The error code for the response.
-    public let code: String
+    public let code: Int
 
     /// A human-readable description of the error.
     public let message: String
