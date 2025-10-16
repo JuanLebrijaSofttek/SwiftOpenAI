@@ -532,7 +532,7 @@ public enum OutputItem: Decodable {
     /// The type of the item. Always "mcp_call"
     public let type: String
     /// The error from the tool call, if any
-    public let error: String?
+    public let error: ResponseModel.ErrorObject?
     /// The output from the tool call
     public let output: String?
 
@@ -576,7 +576,7 @@ public enum OutputItem: Decodable {
     /// The type of the item. Always "mcp_list_tools"
     public let type: String
     /// Error message if the server could not list tools
-    public let error: String?
+    public let error: ResponseModel.ErrorObject?
 
     enum CodingKeys: String, CodingKey {
       case id
