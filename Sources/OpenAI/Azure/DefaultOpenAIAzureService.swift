@@ -50,6 +50,17 @@ public final class DefaultOpenAIAzureService: OpenAIService {
       "Currently, this API is not supported. We welcome and encourage contributions to our open-source project. Please consider opening an issue or submitting a pull request to add support for this feature.")
   }
 
+  #if canImport(AVFoundation)
+  public func realtimeSession(
+    model _: String,
+    configuration _: OpenAIRealtimeSessionConfiguration)
+    async throws -> OpenAIRealtimeSession
+  {
+    fatalError(
+      "Currently, this API is not supported. We welcome and encourage contributions to our open-source project. Please consider opening an issue or submitting a pull request to add support for this feature.")
+  }
+  #endif
+
   public func startChat(parameters: ChatCompletionParameters) async throws -> ChatCompletionObject {
     var chatParameters = parameters
     chatParameters.stream = false
@@ -909,7 +920,8 @@ public final class DefaultOpenAIAzureService: OpenAIService {
   }
 
   public func responseModel(
-    id: String)
+    id: String,
+    parameters _: GetResponseParameter?)
     async throws -> ResponseModel
   {
     let request = try AzureOpenAIAPI.response(.retrieve(responseID: id)).request(
@@ -921,7 +933,14 @@ public final class DefaultOpenAIAzureService: OpenAIService {
     return try await fetch(debugEnabled: debugEnabled, type: ResponseModel.self, with: request)
   }
 
-    //MARK: - RESPONSECREATESTREAM
+  public func responseModelStream(
+    id _: String,
+    parameters _: GetResponseParameter?)
+    async throws -> AsyncThrowingStream<ResponseStreamEvent, Error>
+  {
+    fatalError("responseModelStream not implemented for Azure OpenAI Service")
+  }
+
   public func responseCreateStream(
     _ parameters: ModelResponseParameter)
     async throws -> AsyncThrowingStream<ResponseStreamEvent, Error>
@@ -936,6 +955,92 @@ public final class DefaultOpenAIAzureService: OpenAIService {
       params: responseParameters,
       queryItems: initialQueryItems)
     return try await fetchStream(debugEnabled: debugEnabled, type: ResponseStreamEvent.self, with: request)
+  }
+
+  public func responseDelete(
+    id _: String)
+    async throws -> DeletionStatus
+  {
+    fatalError("responseDelete not implemented for Azure OpenAI Service")
+  }
+
+  public func responseCancel(
+    id _: String)
+    async throws -> ResponseModel
+  {
+    fatalError("responseCancel not implemented for Azure OpenAI Service")
+  }
+
+  public func responseInputItems(
+    id _: String,
+    parameters _: GetInputItemsParameter?)
+    async throws -> OpenAIResponse<InputItem>
+  {
+    fatalError("responseInputItems not implemented for Azure OpenAI Service")
+  }
+
+  // MARK: - Conversations
+
+  public func conversationCreate(
+    parameters _: CreateConversationParameter?)
+    async throws -> ConversationModel
+  {
+    fatalError("conversationCreate not implemented for Azure OpenAI Service")
+  }
+
+  public func getConversation(
+    id _: String)
+    async throws -> ConversationModel
+  {
+    fatalError("getConversation not implemented for Azure OpenAI Service")
+  }
+
+  public func updateConversation(
+    id _: String,
+    parameters _: UpdateConversationParameter)
+    async throws -> ConversationModel
+  {
+    fatalError("updateConversation not implemented for Azure OpenAI Service")
+  }
+
+  public func deleteConversation(
+    id _: String)
+    async throws -> DeletionStatus
+  {
+    fatalError("deleteConversation not implemented for Azure OpenAI Service")
+  }
+
+  public func getConversationItems(
+    id _: String,
+    parameters _: GetConversationItemsParameter?)
+    async throws -> OpenAIResponse<InputItem>
+  {
+    fatalError("getConversationItems not implemented for Azure OpenAI Service")
+  }
+
+  public func createConversationItems(
+    id _: String,
+    parameters _: CreateConversationItemsParameter)
+    async throws -> OpenAIResponse<InputItem>
+  {
+    fatalError("createConversationItems not implemented for Azure OpenAI Service")
+  }
+
+  public func getConversationItem(
+    conversationID _: String,
+    itemID _: String,
+    parameters _: GetConversationItemParameter?)
+    async throws -> InputItem
+  {
+    fatalError("getConversationItem not implemented for Azure OpenAI Service")
+  }
+
+  public func deleteConversationItem(
+    conversationID _: String,
+    itemID _: String)
+    async throws -> ConversationModel
+  {
+    fatalError("deleteConversationItem not implemented for Azure OpenAI Service")
   }
 
   private static let assistantsBetaV2 = "assistants=v2"
